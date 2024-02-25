@@ -1,10 +1,8 @@
 {
   "expo": {
     "name": "Groupify",
-    "slug": "Groupify",
-
+    "slug": "groupify",
     "scheme": "groupify",
-    
     "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,7 +18,9 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "LSApplicationQueriesSchemes": ["groupify"]
+        "LSApplicationQueriesSchemes": [
+          "groupify"
+        ]
       }
     },
     "android": {
@@ -31,6 +31,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f7fa9180-d9e7-45e6-bfe3-4bdca6b73197"
+      }
+    },
+    "owner": "denispandarakalam"
   }
 }

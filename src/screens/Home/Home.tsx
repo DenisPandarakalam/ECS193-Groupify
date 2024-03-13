@@ -1,17 +1,14 @@
 import { Platform, PlatformColor, StyleSheet, View } from "react-native";
 import AppText from "../../ui/texts/AppText";
 import { StackScreenProps } from "@react-navigation/stack";
-import { RootStackParamList } from "../../../App";
 import AppCTAButton from "../../ui/buttons/AppCTAButton";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import RecursiveJSON from "../../components/RecursiveJSON";
 import Spotify from "../../api/Spotify";
+import { RootStackScreenProps } from "../../navigation/types";
 
-
-type HomeProps = StackScreenProps<RootStackParamList, "Home"> & {};
-
-export default function Home({ route, navigation }: HomeProps) {
+export default function Home({ route, navigation }: RootStackScreenProps<"Home">) {
   
   const authContext = useContext(AuthContext);
 

@@ -4,7 +4,6 @@ import { Platform, PlatformColor, StyleSheet, View } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 
 import AppText from "../../ui/texts/AppText";
-import { RootStackParamList } from "../../../App";
 import AppCTAButton from "../../ui/buttons/AppCTAButton";
 
 import { ClientID, ClientSecret, RedirectURI } from "@env";
@@ -14,10 +13,10 @@ import * as WebBrowser from "expo-web-browser";
 import { LinearGradient } from 'expo-linear-gradient';
 
 
-import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
-import RecursiveJSON from "../../components/RecursiveJSON";
+import { useAuthRequest } from "expo-auth-session";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaskedView from "@react-native-masked-view/masked-view";
+import { RootStackNavigationProp, RootStackScreenProps } from "../../navigation/types";
 
 const SpotifyGreen = "#1ed760";
 
@@ -29,9 +28,8 @@ const discovery = {
   tokenEndpoint: "https://accounts.spotify.com/api/token",
 };
 
-type LoginProps = StackScreenProps<RootStackParamList, "Login"> & {};
 
-export default function LoginV2({ route, navigation }: LoginProps) {
+export default function LoginV2({ route, navigation }: RootStackScreenProps<"Login">) {
 
   /** Hooks */
   const safeArea = useSafeAreaInsets();

@@ -1,9 +1,7 @@
 import { createContext } from 'react';
 
 interface AuthContextType {
-
   loggedIn: boolean,
-
   credentials: any,
   setCredentials?: React.Dispatch<React.SetStateAction<{}>>,
   clearCredentials?: CallableFunction,

@@ -29,7 +29,7 @@ const discovery = {
 };
 
 
-export default function LoginV2({ route, navigation }: RootStackScreenProps<"Login">) {
+export default function Login({ route, navigation }: RootStackScreenProps<"Login">) {
 
   /** Hooks */
   const safeArea = useSafeAreaInsets();
@@ -52,6 +52,7 @@ export default function LoginV2({ route, navigation }: RootStackScreenProps<"Log
 
   useEffect(() => {
     if (response?.type === "success") {
+      
       const { code, state } = response.params;
       const { codeVerifier } = request;
 

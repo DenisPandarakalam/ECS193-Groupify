@@ -8,7 +8,7 @@ import { RootStackParamList } from "../types";
 import { Platform } from "react-native";
 import RootStackHeader from "../../components/RootStackHeader";
 import Home from "../../screens/Home/Home";
-import LoginV2 from "../../screens/LoginV2/LoginV2";
+import Login from "../../screens/Login/Login";
 
 const RootStackNavigator = createStackNavigator<RootStackParamList>();
 
@@ -30,7 +30,7 @@ export default function RootStack() {
             >
                 <RootStackNavigator.Screen
                     name="Login"
-                    component={LoginV2}
+                    component={Login}
                     options={{ }}
                 />
                 <RootStackNavigator.Screen

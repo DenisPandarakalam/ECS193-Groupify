@@ -38,14 +38,11 @@ export default function App() {
       
   const _initialize = async () => {
     console.log('Initializing...');
-
     if (Platform.OS !== 'web') {
 
       // Securely get the auth from your device
       const credentialsFromStorage = await SecureStore.getItemAsync('GROUPIFY_CREDENTIALS');
-
       console.log("Credentials From SecureStorage:", credentialsFromStorage);
-
       if(credentialsFromStorage && credentialsFromStorage !== '{}') {
         setCredentials(() => {
           return(JSON.parse(credentialsFromStorage))
@@ -57,7 +54,6 @@ export default function App() {
         })
       }
     }
-
     setInitialized(true);
   }
 

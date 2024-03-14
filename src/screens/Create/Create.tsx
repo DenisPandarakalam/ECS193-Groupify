@@ -87,11 +87,11 @@ export default function Create({
             >
                 <AppText
                     style={{
-                        fontSize: 58,
+                        fontSize: 48,
                         fontWeight: "bold",
                     }}
                 >
-                    JukeBox
+                    Create a Room
                 </AppText>
                 <AppText
                     style={{
@@ -100,7 +100,7 @@ export default function Create({
                         fontWeight: "bold",
                     }}
                 >
-                    {`${userContext.user.display_name}`}
+                    {`Choose any genre`}
                 </AppText>
                 <View
                     style={{
@@ -109,20 +109,29 @@ export default function Create({
                 >
                     <AppCTAButton
                         style={{
-                            marginTop: "10%",
+                            marginTop: "2%",
                         }}
                         title={
-                          "Create a Room"
+                          "RnB"
                         }
                         onPress={() => {
                         }}
                     />
+                    <AppText
+                        style={{
+                            marginTop: "2%",
+                            fontSize: 24,
+                            fontWeight: "bold",
+                        }}
+                    >
+                        {`Add any filters`}
+                    </AppText>
                     <AppCTAButton
                         style={{
                             marginTop: "2%",
                         }}
                         title={
-                          "Join a Room"
+                          "No Explicit"
                         }
                         onPress={() => {
                         }}
@@ -135,9 +144,8 @@ export default function Create({
                         opacity: 0.75
                       }}
                       fontSize={12}
-                      title={"Log Out"}
+                      title={"Create"}
                       onPress={() => {
-                        authContext.clearCredentials();
                       }}
                     />
                 </View>

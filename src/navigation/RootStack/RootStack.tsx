@@ -10,6 +10,8 @@ import RootStackHeader from "../../components/RootStackHeader";
 import Home from "../../screens/Home/Home";
 import Login from "../../screens/Login/Login";
 import { AuthContext } from "../../contexts/AuthContext";
+import Create from "../../screens/Create/Create";
+import Join from "../../screens/Join/Join";
 
 const RootStackNavigator = createStackNavigator<RootStackParamList>();
 
@@ -49,12 +51,12 @@ export default function RootStack() {
                         />
                         <RootStackNavigator.Screen
                             name="Create"
-                            component={Home}
+                            component={Create}
                             options={{}}
                         />
                         <RootStackNavigator.Screen
                             name="Join"
-                            component={Home}
+                            component={Join}
                             options={{}}
                         />
                     </>

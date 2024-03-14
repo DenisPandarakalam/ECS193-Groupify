@@ -87,11 +87,11 @@ export default function Join({
             >
                 <AppText
                     style={{
-                        fontSize: 58,
+                        fontSize: 48,
                         fontWeight: "bold",
                     }}
                 >
-                    JukeBox
+                    Join a Room
                 </AppText>
                 <AppText
                     style={{
@@ -100,7 +100,7 @@ export default function Join({
                         fontWeight: "bold",
                     }}
                 >
-                    {`${userContext.user.display_name}`}
+                    {`Scan a QR Code`}
                 </AppText>
                 <View
                     style={{
@@ -109,20 +109,37 @@ export default function Join({
                 >
                     <AppCTAButton
                         style={{
-                            marginTop: "10%",
+                            marginTop: "2%",
                         }}
                         title={
-                          "Create a Room"
+                          "Scan a Code"
                         }
                         onPress={() => {
                         }}
                     />
+                    <AppText
+                        style={{
+                            marginTop: "2%",
+                            fontSize: 18,
+                            fontWeight: "bold",
+                        }}
+                    >
+                        {`or`}
+                    </AppText>
+                    <AppText
+                        style={{
+                            fontSize: 24,
+                            fontWeight: "bold",
+                        }}
+                    >
+                        {`Enter a Room Code`}
+                    </AppText>
                     <AppCTAButton
                         style={{
                             marginTop: "2%",
                         }}
                         title={
-                          "Join a Room"
+                          "Enter a Room"
                         }
                         onPress={() => {
                         }}
@@ -135,9 +152,8 @@ export default function Join({
                         opacity: 0.75
                       }}
                       fontSize={12}
-                      title={"Log Out"}
+                      title={"Join"}
                       onPress={() => {
-                        authContext.clearCredentials();
                       }}
                     />
                 </View>

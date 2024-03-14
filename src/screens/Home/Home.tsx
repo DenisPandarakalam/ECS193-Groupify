@@ -87,7 +87,7 @@ export default function Home({
             >
                 <AppText
                     style={{
-                        fontSize: 58,
+                        fontSize: 48,
                         fontWeight: "bold",
                     }}
                 >
@@ -109,12 +109,13 @@ export default function Home({
                 >
                     <AppCTAButton
                         style={{
-                            marginTop: "10%",
+                            marginTop: "2%",
                         }}
                         title={
                           "Create a Room"
                         }
                         onPress={() => {
+                          navigation.navigate("Create");
                         }}
                     />
                     <AppCTAButton
@@ -125,6 +126,7 @@ export default function Home({
                           "Join a Room"
                         }
                         onPress={() => {
+                          navigation.navigate("Join");
                         }}
                     />
                     <AppCTAButton

@@ -146,7 +146,7 @@ export default function Login({ route, navigation }: RootStackScreenProps<"Login
       >
         <AppText
           style={{
-            fontSize: 58,
+            fontSize: 48,
             fontWeight: 'bold'
           }}
         >

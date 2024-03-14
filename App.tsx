@@ -3,6 +3,7 @@ import "react-native-gesture-handler";
 import {
   Platform,
   StyleSheet,
+  View,
 } from "react-native";
 import {
   SafeAreaProvider,
@@ -14,6 +15,8 @@ import { UserContext } from "./src/contexts/UserContext";
 
 
 import RootStack from "./src/navigation/RootStack/RootStack";
+import Spotify from "./src/api/Spotify";
+import AppText from "./src/ui/texts/AppText";
 
 export default function App() {
 
@@ -91,6 +94,29 @@ export default function App() {
     },
     [initialized, credentials]
   )
+  
+
+  useEffect(() => {
+
+    const loadProfileInfo = async() => {
+      console.log("Loading Profile Info... token:", credentials.tokens.access_token);
+      const raw = await Spotify.getProfileInfo(credentials);
+      setUser(raw);
+    }
+    
+    if(credentials?.tokens?.access_token) loadProfileInfo();
+
+  }, [credentials])
+
+  if (loggedIn && !user) {
+    return (
+      <View>
+        <AppText>
+          Loading
+        </AppText>
+      </View>
+    )
+  }
 
   return (
       <SafeAreaProvider>
@@ -101,7 +127,10 @@ export default function App() {
           setCredentials,
           clearCredentials
         }}>
-          <UserContext.Provider value={user}>
+          <UserContext.Provider value={{
+            user,
+            setUser
+          }}>
             <RootStack />
           </UserContext.Provider>
         </AuthContext.Provider>

@@ -1,121 +1,163 @@
-import { Platform, PlatformColor, StyleSheet, View } from "react-native";
+import { Dimensions, Platform, PlatformColor, StyleSheet, View } from "react-native";
 import AppText from "../../ui/texts/AppText";
-import { StackScreenProps } from "@react-navigation/stack";
 import AppCTAButton from "../../ui/buttons/AppCTAButton";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-import RecursiveJSON from "../../components/RecursiveJSON";
-import Spotify from "../../api/Spotify";
 import { RootStackScreenProps } from "../../navigation/types";
+import { StatusBar } from "expo-status-bar";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Spotify from "../../api/Spotify";
+import { UserContext } from "../../contexts/UserContext";
 
-export default function Home({ route, navigation }: RootStackScreenProps<"Home">) {
+export default function Home({
+    route,
+    navigation,
+}: RootStackScreenProps<"Home">) {
   
-  const authContext = useContext(AuthContext);
+    /** Hooks */
+    const safeArea = useSafeAreaInsets();
 
-  const [profileInfo, setProfileInfo] = useState(null);
-  const [playerQueue, setPlayerQueue] = useState<{
-    currently_playing: SpotifyApi.TrackObjectFull | SpotifyApi.EpisodeObjectFull;
-    queue: SpotifyApi.TrackObjectFull[] | SpotifyApi.EpisodeObjectFull[];
-  }>(null);
+    /** Context */
+    const authContext = useContext(AuthContext);
+    const userContext = useContext(UserContext);
 
+    // TODO: this might be important later
+    // const [playerQueue, setPlayerQueue] = useState<{
+    //     currently_playing:
+    //         | SpotifyApi.TrackObjectFull
+    //         | SpotifyApi.EpisodeObjectFull;
+    //     queue: SpotifyApi.TrackObjectFull[] | SpotifyApi.EpisodeObjectFull[];
+    // }>(null);
 
-  return (
-    <View style={styles.container}>
-      <AppText>Welcome to Groupify!</AppText>
+    return (
+        <View
+            style={{
+                flex: 1,
+                position: "relative",
+                marginTop: safeArea.top,
+            }}
+        >
+            <StatusBar style="dark" />
 
-      <AppText>This is the {route.name} screen</AppText>
+            <View
+                style={{
+                    position: "absolute",
+                    backgroundColor: "#1ED760",
+                    bottom: "0%",
+                    left: "-50%",
+                    width: "200%",
+                    aspectRatio: 1,
+                    borderRadius: Dimensions.get("window").width,
+                    opacity: 0.25,
+                }}
+            />
 
-      <AppCTAButton
-        title="Navigate Login"
-        onPress={() => {
-          navigation.navigate("Login");
-        }}
-      />
+            <View
+                style={{
+                    position: "absolute",
+                    backgroundColor: "#1ED760",
+                    bottom: "-5%",
+                    left: "-50%",
+                    width: "200%",
+                    aspectRatio: 1,
+                    borderRadius: Dimensions.get("window").width,
+                    opacity: 0.5,
+                }}
+            />
 
-      <AppText style={{fontWeight:'bold'}}>Context Testing</AppText>
-      {
-        authContext?.credentials &&
-        <AppText>{Object.keys(authContext.credentials).join(', ')}</AppText>
-      }
+            <View
+                style={{
+                    position: "absolute",
+                    backgroundColor: "#1ED760",
+                    bottom: "-10%",
+                    left: "-50%",
+                    width: "200%",
+                    aspectRatio: 1,
+                    borderRadius: Dimensions.get("window").width,
+                }}
+            />
 
-      <View
-        style={{
-          flexDirection: 'row'
-        }}
-      >
-
-        <AppCTAButton
-          title="Get Profile Info"
-          onPress={async () => {
-            const raw = await Spotify.getProfileInfo(authContext.credentials.tokens.access_token);
-            setProfileInfo(raw);
-            setPlayerQueue(null);
-          }}
-        />
-
-        <AppCTAButton
-          title="Get Player Queue"
-          onPress={async () => {
-            const raw = await Spotify.getPlayerQueue(authContext.credentials.tokens.access_token);
-            setPlayerQueue(raw);
-            setProfileInfo(null);
-          }}
-        />
-
-        <AppCTAButton
-          title="Play Freak N You"
-          onPress={async () => {
-            const raw = await Spotify.playSong(
-              authContext.credentials.tokens.access_token,
-              ["spotify:track:7C0BHTRLmWUONc8OYjOPdW"]
-            );
-            console.log(raw);
-          }}
-        />
-
-      </View>
-
-      {
-        profileInfo &&
-        <RecursiveJSON data={profileInfo}/>
-      }
-
-      {
-        playerQueue &&
-        <View>
-          <AppText>
-            {playerQueue.currently_playing.name}
-          </AppText>
-          {
-            playerQueue.queue.map(
-              (track, index) => (
+            <View
+                id="content-view"
+                nativeID="content-view"
+                style={{
+                    flex: 1,
+                    paddingTop: "50%",
+                }}
+            >
                 <AppText
-                  key={index}
-                > 
-                  {track.name}
+                    style={{
+                        fontSize: 58,
+                        fontWeight: "bold",
+                    }}
+                >
+                    JukeBox
                 </AppText>
-              )
-            )
-          }
-        </View>
-      }
+                <AppText
+                    style={{
+                        marginTop: "30%",
+                        fontSize: 24,
+                        fontWeight: "bold",
+                    }}
+                >
+                    {`${userContext.user.display_name}`}
+                </AppText>
+                <View
+                    style={{
+                        paddingHorizontal: "20%",
+                    }}
+                >
+                    <AppCTAButton
+                        style={{
+                            marginTop: "10%",
+                        }}
+                        title={
+                          "Create a Room"
+                        }
+                        onPress={() => {
+                        }}
+                    />
+                    <AppCTAButton
+                        style={{
+                            marginTop: "2%",
+                        }}
+                        title={
+                          "Join a Room"
+                        }
+                        onPress={() => {
+                        }}
+                    />
+                    <AppCTAButton
+                      style={{
+                        marginTop: '15%',
+                        marginHorizontal: '10%',
 
-    </View>
-  );
+                        opacity: 0.75
+                      }}
+                      fontSize={12}
+                      title={"Log Out"}
+                      onPress={() => {
+                        authContext.clearCredentials();
+                      }}
+                    />
+                </View>
+            </View>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "flex-start",
+    container: {
+        flex: 1,
+        backgroundColor: "#fff",
+        alignItems: "center",
+        justifyContent: "flex-start",
 
-    ...Platform.select({
-      ios: {
-        backgroundColor: PlatformColor("systemBlue"),
-        color: "#fff",
-      },
-    }),
-  },
+        ...Platform.select({
+            ios: {
+                backgroundColor: PlatformColor("systemBlue"),
+                color: "#fff",
+            },
+        }),
+    },
 });

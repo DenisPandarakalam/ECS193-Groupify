@@ -16,11 +16,12 @@ export default class Spotify {
     return Spotify.instance;
   }
 
-  public static getProfileInfo = async (accessToken: string) => {
-    if (accessToken === "") return;
+  public static getProfileInfo = async (credentials: any) => {
+    if (!credentials || !credentials.tokens || !credentials.tokens.access_token) return;
+    console.log(credentials);
     const response = await fetch("https://api.spotify.com/v1/me", {
       headers: {
-        Authorization: "Bearer " + accessToken,
+        Authorization: "Bearer " + credentials.tokens.access_token,
       },
     });
     const data = await response.json();
@@ -28,11 +29,11 @@ export default class Spotify {
     return data;
   };
 
-  public static getPlayerQueue = async (accessToken: string) => {
-    if (accessToken === "") return;
+  public static getPlayerQueue = async (credentials: any) => {
+    if (!credentials || !credentials.tokens || !credentials.tokens.access_token) return;
     const response = await fetch("https://api.spotify.com/v1/me/player/queue", {
       headers: {
-        Authorization: "Bearer " + accessToken,
+        Authorization: "Bearer " + credentials.tokens.access_token,
       },
     });
     const data = await response.json();
@@ -40,8 +41,8 @@ export default class Spotify {
     return data;
   };
 
-  public static playSong = async (accessToken: string, uris: string[]) => {
-    if (accessToken === "") return;
+  public static playSong = async (credentials: any, uris: string[]) => {
+    if (!credentials || !credentials.tokens || !credentials.tokens.access_token) return;
 
     let body = {
       uris
@@ -50,7 +51,7 @@ export default class Spotify {
     const response = await fetch("https://api.spotify.com/v1/me/player/play", {
       method: "PUT",
       headers: {
-        Authorization: "Bearer " + accessToken,
+        Authorization: "Bearer " + credentials.tokens.access_token,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),

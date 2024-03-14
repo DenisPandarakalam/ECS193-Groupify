@@ -1,22 +1,21 @@
 import { useContext, useEffect } from "react";
 
-import { Platform, PlatformColor, StyleSheet, View } from "react-native";
-import { StackScreenProps } from "@react-navigation/stack";
+import { Dimensions, View } from "react-native";
 
-import AppText from "../../ui/texts/AppText";
-import AppCTAButton from "../../ui/buttons/AppCTAButton";
 
 import { ClientID, ClientSecret, RedirectURI } from "@env";
 import { AuthContext } from "../../contexts/AuthContext";
 
 import * as WebBrowser from "expo-web-browser";
-import { LinearGradient } from 'expo-linear-gradient';
 
 
 import { useAuthRequest } from "expo-auth-session";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import MaskedView from "@react-native-masked-view/masked-view";
-import { RootStackNavigationProp, RootStackScreenProps } from "../../navigation/types";
+import { RootStackScreenProps } from "../../navigation/types";
+import { StatusBar } from "expo-status-bar";
+import AppText from "../../ui/texts/AppText";
+import AppPressable from "../../ui/buttons/AppPressable";
+import AppCTAButton from "../../ui/buttons/AppCTAButton";
 
 const SpotifyGreen = "#1ed760";
 
@@ -92,105 +91,94 @@ export default function Login({ route, navigation }: RootStackScreenProps<"Login
     <View
       style={{
         flex: 1,
-
         position: 'relative',
-
-        paddingTop: safeArea.top,
+        marginTop: safeArea.top,
       }}
     >
-      <MaskedView
-        style={{ 
-          position: 'absolute',
+      <StatusBar style="dark"/>
 
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0,
-
-          paddingTop: safeArea.top,
-        }}
-        maskElement={
-          <View
-            style={{
-              marginTop: safeArea.top,
-
-              flex: 1,
-
-              backgroundColor: 'transparent',
-
-              paddingTop: '20%',
-
-              alignItems: 'center',
-            }}
-          >
-            <AppText
-              style={{
-                fontSize: 72,
-                fontWeight: 'bold',
-              }}
-            >
-              groupify
-            </AppText>
-            <AppText
-              style={{
-                fontSize: 12,
-                fontWeight: 'normal',
-              }}
-            >
-              the perfect dj
-            </AppText>
-          </View>
-        }
-      >
-        <LinearGradient
-          style={[
-            {   
-              position: 'absolute',
-              left: 0,
-              right: 0,
-              top: 0,
-              bottom: 0,
-            }
-          ]}
-          // Background Linear Gradient
-          colors={[SpotifyGreen, 'black']}
-          start={[0.5, 0.25]}
-          end={[0.5, 0.5]}
-        />
-      </MaskedView>
-
-      <View
+      <View 
         style={{
           position: 'absolute',
+          backgroundColor: '#1ED760',
+          bottom: '0%',
+          left: '-50%',
+          width: '200%',
+          aspectRatio: 1,
+          borderRadius: Dimensions.get('window').width,
+          opacity: 0.25
+        }}
+      />
 
-          left: 0,
-          right: 0,
-          top: '50%',
-          bottom: 0,
+      <View 
+        style={{
+          position: 'absolute',
+          backgroundColor: '#1ED760',
+          bottom: '-5%',
+          left: '-50%',
+          width: '200%',
+          aspectRatio: 1,
+          borderRadius: Dimensions.get('window').width,
+          opacity: 0.5
+        }}
+      />
 
-          paddingHorizontal: "25%"
+      <View 
+        style={{
+          position: 'absolute',
+          backgroundColor: '#1ED760',
+          bottom: '-10%',
+          left: '-50%',
+          width: '200%',
+          aspectRatio: 1,
+          borderRadius: Dimensions.get('window').width
+        }}
+      />
+
+      <View
+        id="content-view"
+        nativeID="content-view"
+
+        style={{
+          flex: 1,
+          paddingTop: '50%',
         }}
       >
-        <AppCTAButton 
-          title={!authContext.loggedIn ? "Connect With Spotify" : "Home"}
-          onPress={
-            () => {
+        <AppText
+          style={{
+            fontSize: 58,
+            fontWeight: 'bold'
+          }}
+        >
+          JukeBox
+        </AppText>
+        <AppText
+          style={{
+            marginTop: '30%',
+            fontSize: 24,
+            fontWeight: 'bold',
+          }}
+        >
+          Please Log In
+        </AppText>
+        <View
+          style={{
+            paddingHorizontal: '20%'
+          }}
+        >
+          <AppCTAButton
+            style={{
+              marginTop: '10%'
+            }}
+            title={!authContext.loggedIn ? "Connect With Spotify" : "Home"} 
+            onPress={() => {
               if (authContext.loggedIn)
                 navigation.navigate("Home");
               else
                 promptAsync();
-            }
-          }
-        />
-        {
-          authContext.loggedIn &&
-          <AppCTAButton 
-            title={"Log Out"}
-            onPress={() => {
-              authContext.clearCredentials();
             }}
           />
-        }
+        </View>
       </View>
     </View>
   );

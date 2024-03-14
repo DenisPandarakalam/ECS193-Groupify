@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import {
   createStackNavigator,
@@ -9,16 +9,20 @@ import { Platform } from "react-native";
 import RootStackHeader from "../../components/RootStackHeader";
 import Home from "../../screens/Home/Home";
 import Login from "../../screens/Login/Login";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const RootStackNavigator = createStackNavigator<RootStackParamList>();
 
 export default function RootStack() {
 
+    /** Context */
+    const authContext = useContext(AuthContext);
+
     return (
         <NavigationContainer>
             <RootStackNavigator.Navigator
                 id="RootStack"
-                initialRouteName="Login"
+                initialRouteName={!authContext.loggedIn ? "Login" : "Home"}
                 screenOptions={{
                     headerStyleInterpolator: Platform.select({
                         ios: HeaderStyleInterpolators.forUIKit,
@@ -28,16 +32,33 @@ export default function RootStack() {
                     headerShown: false
                 }}
             >
-                <RootStackNavigator.Screen
-                    name="Login"
-                    component={Login}
-                    options={{ }}
-                />
-                <RootStackNavigator.Screen
-                    name="Home"
-                    component={Home}
-                    options={{ title: "Groupify" }}
-                />
+                {
+                    !authContext.loggedIn ?
+                    <RootStackNavigator.Screen
+                        name="Login"
+                        component={Login}
+                        options={{
+                            animationTypeForReplace: !authContext.loggedIn ? 'pop' : 'push',
+                        }}
+                    /> :
+                    <>
+                        <RootStackNavigator.Screen
+                            name="Home"
+                            component={Home}
+                            options={{}}
+                        />
+                        <RootStackNavigator.Screen
+                            name="Create"
+                            component={Home}
+                            options={{}}
+                        />
+                        <RootStackNavigator.Screen
+                            name="Join"
+                            component={Home}
+                            options={{}}
+                        />
+                    </>
+                }
             </RootStackNavigator.Navigator>
         </NavigationContainer>
     );

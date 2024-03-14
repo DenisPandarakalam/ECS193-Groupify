@@ -19,7 +19,6 @@ type AppCTAButtonVibrations =
 export type AppCTAButtonProps = {
   variant?: AppCTAButtonVariants
   vibration?: AppCTAButtonVibrations
-  verticalOffset?: number,
 
   title: string;
   fontSize?: number;
@@ -27,7 +26,7 @@ export type AppCTAButtonProps = {
 
 const animSpringConfig = {
   useNativeDriver: true,
-  stiffness: 100,
+  stiffness: 10,
   damping: 1,
   mass: 0.5,
   overshootClamping: true
@@ -36,7 +35,6 @@ const animSpringConfig = {
 export default ({
   variant = 'primary',
   vibration = 'light',
-  verticalOffset = 2,
 
   title,
   fontSize,
@@ -109,64 +107,22 @@ export default ({
       style={[
         styles.pressable,
         {
-          position: 'relative',
-
-          zIndex: 0,
-
-          marginVertical: verticalOffset,
-          marginHorizontal: StyleSheet.hairlineWidth,
-          
-          transform: [
-            {
-              translateY: animValue.interpolate(
-                {
-                  inputRange: [0, 1],
-                  outputRange: [verticalOffset, 0]
-                }
-              )
-            }
-          ]
+          opacity: Animated.add(animValue, 0.75),
+          transform: [{scale: Animated.diffClamp(animValue, 0.98, 1)}] 
         },
         pressableProps.style as StyleProp<ViewStyle>
       ]}
     >
-      <Animated.View
+      <AppText
         style={[
-          {
-
-            zIndex: 1,
-
-            borderRadius: 10,
-    
-            backgroundColor: 'white',
-    
-            paddingVertical: 5,
-            paddingHorizontal: 10,
-
-            transform: [
-              {
-                translateY: animValue.interpolate(
-                  {
-                    inputRange: [0, 1],
-                    outputRange: [0, -verticalOffset]
-                  }
-                )
-              }
-            ]
+          styles.ctaText,
+          fontSize && {
+            fontSize: fontSize
           }
         ]}
       >
-        <AppText
-          style={[
-            styles.ctaText,
-            fontSize && {
-              fontSize: fontSize
-            }
-          ]}
-        >
-          {title}
-        </AppText>
-      </Animated.View>
+        {title}
+      </AppText>
     </AnimatedPressable>
   );
 }
@@ -175,10 +131,10 @@ const styles = StyleSheet.create({
   pressable: {
     ...Platform.select({
       ios: {
-        borderColor: PlatformColor('systemGreen'),
-        borderWidth: 1,
-        borderRadius: 10,
-        backgroundColor: PlatformColor('systemGreen'),
+        borderRadius: 100,
+        backgroundColor: 'white',
+        paddingVertical: 15,
+        paddingHorizontal: 20
       }
     })
   },
@@ -196,7 +152,7 @@ const styles = StyleSheet.create({
         color: PlatformColor('systemGreen'),
 
         textAlign: 'center',
-        fontWeight: '900',
+        fontWeight: 'normal',
       }
     })
   }

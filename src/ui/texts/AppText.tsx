@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
       ios: {
         fontFamily: 'Helvetica Neue',
         textAlign: 'center',
+        color: 'white'
       }
     })
   },

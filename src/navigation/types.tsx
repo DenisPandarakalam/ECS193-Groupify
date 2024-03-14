@@ -1,8 +1,10 @@
 import { StackNavigationProp, StackScreenProps } from "@react-navigation/stack";
 
 export type RootStackParamList = {
-    Login: undefined;
+    Login: undefined;    
     Home: undefined;
+    Create: undefined;
+    Join: undefined;
 };
 
 export type RootStackNavigationProp<T extends keyof RootStackParamList> = StackNavigationProp<RootStackParamList, T>;
